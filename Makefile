@@ -12,8 +12,8 @@
 # See also the Makefile in the enterprise-contract.github.io repo which has
 # similar scripts for doing local docs preview builds.
 #
-HACBS_DOCS_DIR=../enterprise-contract.github.io/antora
-HACBS_DOCS_REPO=git@github.com:enterprise-contract/enterprise-contract.github.io.git
+HACBS_DOCS_DIR=../conforma.github.io/antora
+HACBS_DOCS_REPO=git@github.com:conforma/conforma.github.io.git
 $(HACBS_DOCS_DIR):
 	mkdir $(HACBS_DOCS_DIR) && cd $(HACBS_DOCS_DIR) && git clone $(HACBS_DOCS_REPO) .
 
