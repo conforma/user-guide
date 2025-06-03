@@ -36,34 +36,34 @@ Many of the policy rules are linked to specific SLSA requirements, for example:
 |SLSA reference|Conforma policy rule|Notes
 
 a| https://slsa.dev/spec/v0.1/requirements#scripted-build[Scripted build (v0.1)]
-a| xref:ec-policies:ROOT:release_policy.adoc#slsa_build_scripted_build__build_script_used[Build task contains steps]
+a| xref:policy:ROOT:release_policy.adoc#slsa_build_scripted_build__build_script_used[Build task contains steps]
 a| Konflux uses link:https://tekton.dev/[Tekton] so knowing that is enough to consider this requirement satisfied, however this specific
 rule confirms it explicitly for each build. The rule asserts that the attestation includes details about the pipeline run that created the build,
 that the specific task run that pushed the image is identifiable, and that information about each steps in that task run are present.
 
 a| https://slsa.dev/spec/v0.1/requirements#build-service[Build service (v0.1)]
-a| xref:ec-policies:ROOT:release_policy.adoc#slsa_build_build_service__slsa_builder_id_found[SLSA Builder ID found]
+a| xref:policy:ROOT:release_policy.adoc#slsa_build_build_service__slsa_builder_id_found[SLSA Builder ID found]
 a| This check aims to confirm the basic requirement from the v0.1 SLSA spec that the build ran on a build service. Once again, any build created
 by Konflux is expected to meet this requirement, but the rule confirms this by verifying that that a builder is present in the SLSA attestation. The SLSA
 Builder ID is also key part of the link:https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level[Verifying Artifacts] process
 described in SLSA v1.0.
 
 a| https://slsa.dev/spec/v0.1/requirements#hermetic[Hermetic Builds (v0.1)]
-a| xref:ec-policies:ROOT:release_policy.adoc#hermetic_build_task__build_task_hermetic[Build task called with hermetic param set]
+a| xref:policy:ROOT:release_policy.adoc#hermetic_build_task__build_task_hermetic[Build task called with hermetic param set]
 a| This rule verifies that the build task was called with a particular parameter specifying the build should be done hermeticly. This rule is specific
 to Konflux's task definitions, since Conforma isn't able to explicitly confirm that the build was indeed hermetic. But, when combined with the strictest
-xref:ec-policies:ROOT:release_policy.adoc#trusted_task__trusted[trusted tasks rule], and a trustable source for the task definition, we can use the
+xref:policy:ROOT:release_policy.adoc#trusted_task__trusted[trusted tasks rule], and a trustable source for the task definition, we can use the
 rule to ensure that only builds performed hermeticly can be released.
 
 a| https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level[Verifying Artifacts (v1.0)]
-a| xref:ec-policies:ROOT:release_policy.adoc#slsa_build_build_service__slsa_builder_id_accepted[SLSA Builder ID is known and accepted]
+a| xref:policy:ROOT:release_policy.adoc#slsa_build_build_service__slsa_builder_id_accepted[SLSA Builder ID is known and accepted]
 a| The verification process described in the SLSA v1.0 spec includes a check to confirm the builder id matches what is
 expected. This rule will fail if an unexpected builder id is found in the SLSA attestation. (For Konflux currently the builder id
 is the default used by Tekton Chains, though this may change in the future.)
 
 a| https://slsa.dev/spec/v1.0/threats#f-upload-modified-package[Threat (G) - Upload modified package],
 https://slsa.dev/spec/v1.0/threats#h-use-compromised-package[Threat (H) - Use compromised package] (v1.0)
-a| xref:ec-policies:ROOT:release_policy.adoc#builtin_image__signature_check[Image signature check passed]
+a| xref:policy:ROOT:release_policy.adoc#builtin_image__signature_check[Image signature check passed]
 a| Conforma uses a public key to validate the signature of the image using https://docs.sigstore.dev/cosign/overview/[Cosign]. If the image
 signature can't be verified for any reason, a failure will be reported. There are other ways to verify image signatures, e.g. by using `cosign` directly,
 but Conforma will happily do it for you.
@@ -73,25 +73,25 @@ using https://docs.sigstore.dev/fulcio/overview/[Sigstore Fulcio], though Konflu
 signing keys to sign images and attestations.
 
 a| https://slsa.dev/spec/v1.0/verifying-artifacts[Verifying Artifacts (v1.0)]
-a| xref:ec-policies:ROOT:release_policy.adoc#builtin_attestation__signature_check[Attestation signature check passed]
+a| xref:policy:ROOT:release_policy.adoc#builtin_attestation__signature_check[Attestation signature check passed]
 a| As well as verifying the image signature, Conforma also verifies the signature of the attestation, which is an important part of the artifact
 verification process. For Konflux the same key is used to sign the attestation and the image itself. As mentioned above, there is experimental
 support for verifying keylessly signed attestations.
 
 a| https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level[Verifying Artifacts (v1.0)]
-a| xref:ec-policies:ROOT:release_policy.adoc#slsa_build_scripted_build__subject_build_task_matches[Provenance subject matches build task image result]
+a| xref:policy:ROOT:release_policy.adoc#slsa_build_scripted_build__subject_build_task_matches[Provenance subject matches build task image result]
 a| SLSA recommends an artifact verifier checks that the provenance statement’s subject matches the digest of the artifact in question.
 This is a good sanity check to confirm that the provenance being considered is for the expected image. Because Conforma uses Cosign under the hood, and
 Cosign does this check as part of its signature verification, we get this confirmed automatically. The Conforma rule linked here performs an additional
 confirmation by comparing the image reference produced by the build task and confirming that also matches the provenance subject.
 
 a| https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level[Verifying Artifacts (v1.0)]
-a| xref:ec-policies:ROOT:release_policy.adoc#slsa_provenance_available__attestation_predicate_type_accepted[Expected attestation predicate type found]
+a| xref:policy:ROOT:release_policy.adoc#slsa_provenance_available__attestation_predicate_type_accepted[Expected attestation predicate type found]
 a| SLSA suggests that the predicate type in the artifact's provenance should be `https://slsa.dev/provenance/v1`. This rule confirms that requirement,
 and will fail if the predicate type is found to be any other value.
 
 a| https://slsa.dev/spec/v1.0/verifying-artifacts#step-1-check-slsa-build-level[Verifying Artifacts (v1.0)]
-a| xref:ec-policies:ROOT:release_policy.adoc#provenance_materials__git_clone_source_matches_provenance[Git clone source matches materials provenance]
+a| xref:policy:ROOT:release_policy.adoc#provenance_materials__git_clone_source_matches_provenance[Git clone source matches materials provenance]
 a| This is a good sanity check related to artifact verification that isn't specifically mentioned in the SLSA guidelines. In Konflux build pipelines the
 git clone task provides information about the git repo and the commit sha used. This rule confirms that the url and the commit sha from the git clone
 task match what appears in the "materials" provenance.
@@ -132,7 +132,7 @@ in that they use details about the Tekton pipeline run, which are currently
 made available in the SLSA attestation created by Tekton Chains.
 
 This is not a limitation of Conforma itself, but rather just an attribute of the
-xref:ec-policies:ROOT:release_policy.adoc[policies created for Konflux] in their
+xref:policy:ROOT:release_policy.adoc[policies created for Konflux] in their
 current state. In the future we're aiming to extract the Tekton specific rules from
 the general SLSA rules to make the rules more generally applicable. We expected
 that policy rules for build systems not based on Tekton and Tekton Chains could
@@ -142,7 +142,7 @@ Note also that since Conforma can conveniently apply any policy defined in
 https://www.openpolicyagent.org/docs/latest/policy-language/[OPA/Rego], it is
 able to be used for a wide range of purposes, e.g. to verify certain tests were
 run and passed, and to apply any business specific release policies. Browse the
-rules defined in xref:ec-policies:ROOT:release_policy.adoc[Policies] to see
+rules defined in xref:policy:ROOT:release_policy.adoc[Policies] to see
 what other rules have been defined for use by Konflux within Red Hat.
 
 == Conclusion

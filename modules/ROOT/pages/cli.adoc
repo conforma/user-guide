@@ -234,7 +234,7 @@ Error: success criteria not met
 === Validating policy configuration
 
 As a convention, the
-xref:ec-policies:ROOT:release_policy.adoc#policy_data[`policy_data`] collection
+xref:policy:ROOT:release_policy.adoc#policy_data[`policy_data`] collection
 includes rules that check the conformance of xref:custom-data.adoc[rule data].
 When customizing the rule data this can be used to validate that the data is
 well formed.
@@ -247,8 +247,8 @@ For this a policy as in the following example can be used:
 description: Custom rule data validation
 sources:
   - policy:
-      - github.com/enterprise-contract/ec-policies//policy/lib
-      - github.com/enterprise-contract/ec-policies//policy/release
+      - github.com/conforma/policy//policy/lib
+      - github.com/conforma/policy//policy/release
     data:
       - /path/to/rule_data.yml
       - /path/to/required_tasks.yml
