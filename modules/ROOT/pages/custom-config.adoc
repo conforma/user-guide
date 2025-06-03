@@ -85,8 +85,8 @@ spec:
   sources:
     - name: Release policies
       policy:
-        - github.com/enterprise-contract/ec-policies//policy/lib
-        - github.com/enterprise-contract/ec-policies//policy/release
+        - github.com/conforma/policy//policy/lib
+        - github.com/conforma/policy//policy/release
       data:
         - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
         - github.com/release-engineering/rhtap-ec-policy//data

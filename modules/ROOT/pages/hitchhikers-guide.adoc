@@ -216,7 +216,7 @@ the expected value.
 The `METADATA` comment block is rego's way to specify
 https://www.openpolicyagent.org/docs/latest/policy-language/#metadata[annotations] for rules. Conforma
 leverages this in order to provide additional information in its report, see
-https://enterprisecontract.dev/docs/ec-policies/authoring.html#_rule_annotations[here].
+https://enterprisecontract.dev/docs/policy/authoring.html#_rule_annotations[here].
 
 `input` is a rego object that holds all the information about the image, its signature, and its
 attestations. Its contents are defined

@@ -109,7 +109,7 @@ level success value is `true`.
 
 Notice the configuration currenly specifies the `minimal` collection. This means there
 are a subset of the rules being applied. You can see the list of rules in the
-link:https://enterprisecontract.dev/docs/ec-policies/release_policy.html#_available_rule_collections[documentation here].
+link:https://enterprisecontract.dev/docs/policy/release_policy.html#_available_rule_collections[documentation here].
 
 You can also use ec to produce a list of the rules like this:
 
@@ -271,10 +271,10 @@ This is the kind of thing that a Konflux user might want to do based on what
 security policies they decide are appopriate for their situation.
 
 First, let's take a look at how that rule works. The documentation is
-link:https://enterprisecontract.dev/docs/ec-policies/release_policy.html#step_image_registries__task_step_images_permitted[here].
+link:https://enterprisecontract.dev/docs/policy/release_policy.html#step_image_registries__task_step_images_permitted[here].
 
 Clicking through to
-link:https://github.com/enterprise-contract/ec-policies/blob/main/policy/release/step_image_registries.rego#L33[the
+link:https://github.com/conforma/policy/blob/main/policy/release/step_image_registries.rego#L33[the
 code] we can see a reference to `allowed_step_image_registry_prefixes`. This refers to some data that
 comes from the `data` source.
 
@@ -301,7 +301,7 @@ ec inspect policy-data \
 NOTE: This would be less confusing if we had the `ec inspect data` command, which is planned in link:https://issues.redhat.com/browse/HACBS-1732[HACBS-1732].
 
 Looking at the
-link:https://github.com/enterprise-contract/ec-policies/blob/main/data/rule_data.yml[rule_data.yml]
+link:https://github.com/conforma/policy/blob/main/data/rule_data.yml[rule_data.yml]
 file we can see that `allowed_step_image_registry_prefixes` is a list of
 strings which define the policy about which specify defines the policy enforced
 by the `step_image_registries.disallowed_task_step_image` rule.
@@ -529,7 +529,7 @@ sources:
         - test.test_result_failures:sanity-label-check
 ----
 TIP: The policy source `oci::quay.io/enterprise-contract/ec-release-policy:latest` will give you access to some useful helper methods
-defined link:https://github.com/enterprise-contract/ec-policies/tree/main/policy/lib[here]. For instance, `lib.result_helper(rego.metadata.chain(), [])`
+defined link:https://github.com/conforma/policy/tree/main/policy/lib[here]. For instance, `lib.result_helper(rego.metadata.chain(), [])`
 collects information from the `custom` annotation and uses it in the `ec-cli` output. This can be helpful debugging violations.
 
 Now let's run ec again:
