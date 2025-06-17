@@ -271,7 +271,7 @@ This is the kind of thing that a Konflux user might want to do based on what
 security policies they decide are appopriate for their situation.
 
 First, let's take a look at how that rule works. The documentation is
-link:https://enterprisecontract.dev/docs/policy/release_policy.html#step_image_registries__task_step_images_permitted[here].
+link:https://conforma.dev/docs/policy/packages/task_step_image_registries.html#step_image_registries__step_images_permitted[here].
 
 Clicking through to
 link:https://github.com/conforma/policy/blob/main/policy/release/step_image_registries.rego#L33[the
