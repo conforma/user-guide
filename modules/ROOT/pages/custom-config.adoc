@@ -32,7 +32,7 @@ Find the `spec` key and add `params` underneath it like this:
 spec:
   params:
     - name: POLICY_CONFIGURATION
-      value: github.com/enterprise-contract/config//slsa3
+      value: github.com/conforma/config//slsa3
 …
 ----
 
@@ -51,9 +51,9 @@ apiVersion: appstudio.redhat.com/v1alpha1
 Save the file to update the CR in the cluster.
 
 NOTE: The config file specified in the above example is
-link:https://github.com/enterprise-contract/config/blob/main/slsa3/policy.yaml[this
+link:https://github.com/conforma/config/blob/main/slsa3/policy.yaml[this
 one]. There are some other
-link:https://github.com/enterprise-contract/config[predefined configurations
+link:https://github.com/conforma/config[predefined configurations
 available] in that same repo. You can of course substitute your own git repo
 with your own customized policy file.
 

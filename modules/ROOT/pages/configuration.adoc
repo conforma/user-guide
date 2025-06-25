@@ -10,7 +10,7 @@ it can be fetched from a git url.
 For xref:cli.adoc[command line use] of Conforma a local file can also be used.
 
 There are some pre-defined configuration files available
-link:https://github.com/enterprise-contract/config[here].
+link:https://github.com/conforma/config[here].
 
 == Finding the configuration used
 

@@ -99,7 +99,7 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZP/0htjhVt2y0ohjgtIIgICOtQtA
 naYJRuLprwIv6FDhZ5yFjYUEtsmoNcW7rx2KM6FOXGsCX3BNc7qhHELT+g==
 -----END PUBLIC KEY-----' > key.pub
 
-$ wget -q https://github.com/enterprise-contract/config/raw/main/slsa3/policy.yaml
+$ wget -q https://github.com/conforma/config/raw/main/slsa3/policy.yaml
 ----
 
 Now we can run the ec like this:
@@ -136,7 +136,7 @@ You can now modify the `policy.yaml` file and re-run the `ec validate image`
 command to try different policy configurations. See
 xref:ecc:ROOT:index.adoc[the configuration docs] for more information on the
 `policy.yaml` file, or take a look at the examples
-link:https://github.com/enterprise-contract/config[here].
+link:https://github.com/conforma/config[here].
 
 See also the how-to on xref:reproducing-a-konflux-conforma-report.adoc[reproducing the Conforma output from a Konflux
 integration test].
