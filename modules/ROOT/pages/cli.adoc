@@ -5,7 +5,7 @@
 
 === Downloading a binary
 
-Visit link:https://github.com/enterprise-contract/ec-cli/releases[the releases
+Visit link:https://github.com/conforma/cli/releases[the releases
 page], scroll and expand "Assets". Find the appropriate binary for your system,
 download it and copy it to somewhere in your path.
 
@@ -13,7 +13,7 @@ For example:
 
 [,shell]
 ----
-$ curl -sLO https://github.com/enterprise-contract/ec-cli/releases/download/snapshot/ec_linux_amd64
+$ curl -sLO https://github.com/conforma/cli/releases/download/snapshot/ec_linux_amd64
 $ chmod 755 ec_linux_amd64
 $ sudo mv ec_linux_amd64 /usr/local/bin/ec
 $ ec version
@@ -26,8 +26,8 @@ If you have docker or podman installed you can also run ec like this:
 
 [,shell]
 ----
-$ docker pull quay.io/enterprise-contract/ec-cli:snapshot
-$ docker run quay.io/enterprise-contract/ec-cli:snapshot
+$ docker pull quay.io/conforma/cli:snapshot
+$ docker run quay.io/conforma/cli:snapshot
 ----
 
 Substitute `podman` for `docker` in the above command if you're using podman.
@@ -35,7 +35,7 @@ For convenience you could create an alias. For example:
 
 [,shell]
 ----
-$ alias ec="docker run quay.io/enterprise-contract/ec-cli:snapshot"
+$ alias ec="docker run quay.io/conforma/cli:snapshot"
 $ ec version
 $ ec --help
 ----
@@ -46,7 +46,7 @@ mount it when running docker.
 
 [,shell]
 ----
-$ docker run -v ./key.pub:/tmp/key.pub:Z quay.io/enterprise-contract/ec-cli:snapshot validate image ...
+$ docker run -v ./key.pub:/tmp/key.pub:Z quay.io/conforma/cli:snapshot validate image ...
 ----
 
 === Compiling from source
@@ -55,8 +55,8 @@ To compile ec from source:
 
 [,shell]
 ----
-$ git clone git@github.com:enterprise-contract/ec-cli.git
-$ cd ec-cli
+$ git clone git@github.com:conforma/cli.git
+$ cd cli
 $ make build
 $ sudo cp dist/ec_linux_amd64 /usr/local/bin/ec
 $ ec version

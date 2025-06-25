@@ -530,7 +530,7 @@ sources:
 ----
 TIP: The policy source `oci::quay.io/enterprise-contract/ec-release-policy:latest` will give you access to some useful helper methods
 defined link:https://github.com/conforma/policy/tree/main/policy/lib[here]. For instance, `lib.result_helper(rego.metadata.chain(), [])`
-collects information from the `custom` annotation and uses it in the `ec-cli` output. This can be helpful debugging violations.
+collects information from the `custom` annotation and uses it in the `ec` output. This can be helpful debugging violations.
 
 Now let's run ec again:
 
