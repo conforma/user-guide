@@ -42,7 +42,7 @@ REPOSITORY='localhost:5000/ec-zero-to-hero'
 == Container Image
 
 Before signing and attesting an image, we need... well... a container image! Any image will do. You
-can use the ec-cli image if you need one, `quay.io/enterprise-contract/ec-cli:latest`.
+can use the ec image if you need one, `quay.io/conforma/cli:latest`.
 
 Let's copy the image to our test repository. This can be done with a tool such as
 https://github.com/containers/skopeo[skopeo] or
@@ -50,9 +50,9 @@ https://github.com/google/go-containerregistry/tree/main/cmd/crane[crane]:
 
 [source, bash]
 ----
-crane copy quay.io/enterprise-contract/ec-cli:latest "$REPOSITORY:latest"
+crane copy quay.io/conforma/cli:latest "$REPOSITORY:latest"
 # or with skopeo:
-# skopeo copy docker://quay.io/enterprise-contract/ec-cli:latest \
+# skopeo copy docker://quay.io/conforma/cli:latest \
 #  "docker://$REPOSITORY:latest" --dest-tls-verify=false
 # NOTE: Only set `--dest-tls-verify=false` if you are using a local registry.
 ----
@@ -220,7 +220,7 @@ https://enterprisecontract.dev/docs/policy/authoring.html#_rule_annotations[here
 
 `input` is a rego object that holds all the information about the image, its signature, and its
 attestations. Its contents are defined
-https://enterprisecontract.dev/docs/ec-cli/policy_input.html[here]. It is also possible to save
+https://enterprisecontract.dev/docs/cli/policy_input.html[here]. It is also possible to save
 this object to a JSON file which is useful when writing new policy rules. To do so, use the
 `policy-input` output, e.g. `ec validate image ... --output policy-input`.
 
@@ -239,7 +239,7 @@ sources:
 This policy configuration references the rules by file name, which have to be absolute paths. This
 is useful for testing and development of rules. Referencing rules in a git repository or in an OCI
 registry are better suited for most other use cases. The
-https://enterprisecontract.dev/docs/ec-cli/configuration.html[docs] on policy configuration
+https://enterprisecontract.dev/docs/cli/configuration.html[docs] on policy configuration
 explain this concept further.
 
 Finally, let's use this policy in our validation and also use the previously mentioned flags to

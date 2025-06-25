@@ -16,7 +16,7 @@ link:https://konflux-ci.dev/docs/advanced-how-tos/managing-compliance-with-ec/[d
 
 NOTE: You can view the definitions of the
 link:https://github.com/konflux-ci/build-definitions/blob/main/pipelines/enterprise-contract.yaml[Conforma pipeline],
-and the link:https://github.com/enterprise-contract/ec-cli/blob/main/tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml[Conforma task].
+and the link:https://github.com/conforma/cli/blob/main/tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml[Conforma task].
 
 NOTE: If you prefer to pin the pipeline bundle to a particular version, instead of using the `devel` tag, use one of the pinned tags
 link:https://quay.io/repository/konflux-ci/tekton-catalog/pipeline-enterprise-contract?tab=tags[visible here].
