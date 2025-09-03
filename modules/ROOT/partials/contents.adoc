@@ -12,4 +12,8 @@
 
 * xref:slsa.adoc[Conforma & SLSA]
 
+* Diagrams
+** xref:diagram-conforma-workflow.adoc[Conforma Workflow Diagram]
+
+
 * xref:glossary.adoc[Glossary]
