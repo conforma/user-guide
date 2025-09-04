@@ -1,8 +1,0 @@
-version: 2
-updates:
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: weekly
-      time: '15:00'
-      timezone: Etc/UTC
