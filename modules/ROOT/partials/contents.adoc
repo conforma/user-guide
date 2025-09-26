@@ -14,6 +14,6 @@
 
 * Diagrams
 ** xref:diagram-conforma-workflow.adoc[Conforma Workflow Diagram]
-
+** xref:diagram-conforma-data-flow.adoc[Conforma Data Flow Diagram]
 
 * xref:glossary.adoc[Glossary]
