@@ -232,7 +232,7 @@ will provide a namespace later.
 
 At the beginning of this document, you logged in on a member cluster. This is, currently, required in
 order to access the default
-link:https://enterprisecontract.dev/docs/ecc/reference.html#k8s-api-github-com-enterprise-contract-enterprise-contract-controller-api-v1alpha1-enterprisecontractpolicy[EnterpriseContractPolicy]
+link:https://enterprisecontract.dev/docs/ecc/reference.html#k8s-api-github-com-conforma-crds-api-v1alpha1-enterprisecontractpolicy[EnterpriseContractPolicy]
 and the public key. However, resources on the
 cluster cannot be created this way. They must be created via the proxy. To do so, obtain a token from
 https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/[here]
