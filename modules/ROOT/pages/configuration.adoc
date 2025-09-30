@@ -4,7 +4,7 @@
 Conforma configuration is described xref:ecc:ROOT:index.adoc[here].
 
 The configuration used by Conforma can be provided by an
-xref:ecc:ROOT:reference.adoc[`EnterpriseContractPolicy` cluster resource], or
+xref:cli:ROOT:reference.adoc[`EnterpriseContractPolicy` cluster resource], or
 it can be fetched from a git url.
 
 For xref:cli.adoc[command line use] of Conforma a local file can also be used.
