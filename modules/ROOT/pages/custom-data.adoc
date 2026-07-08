@@ -96,7 +96,7 @@ sources:
       - github.com/release-engineering/rhtap-ec-policy//data
     name: Default Policies
     policy:
-      - oci::quay.io/enterprise-contract/ec-release-policy:latest@sha256:16703532b485c4edd3cbe47f62d44a51be4b7390b663e86eb5a7372ba9ecae52
+      - oci::quay.io/conforma/release-policy:latest@sha256:1b3d20d7d24dd42e615b41450291c5a475997fb2a21d1ae8c5b1c1c8034f4d32
     config:
       include:
         - '@minimal'
@@ -116,7 +116,7 @@ You can also use ec to produce a list of the rules like this:
 [.console-input]
 [source, bash]
 ----
-ec inspect policy --source quay.io/enterprise-contract/ec-release-policy --collection minimal --output text
+ec inspect policy --source quay.io/conforma/release-policy --collection minimal --output text
 ----
 
 By default Conforma applies all the rules found in the policy source. So we can just remove the collection configuration to make this happen.
@@ -132,7 +132,7 @@ sources:
       - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
       - github.com/release-engineering/rhtap-ec-policy//data
     policy:
-      - oci::quay.io/enterprise-contract/ec-release-policy:latest@sha256:16703532b485c4edd3cbe47f62d44a51be4b7390b663e86eb5a7372ba9ecae52
+      - oci::quay.io/conforma/release-policy:latest@sha256:1b3d20d7d24dd42e615b41450291c5a475997fb2a21d1ae8c5b1c1c8034f4d32
     config: {}
 ----
 
@@ -186,7 +186,7 @@ sources:
       - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
       - github.com/release-engineering/rhtap-ec-policy//data
     policy:
-      - oci::quay.io/enterprise-contract/ec-release-policy:latest@sha256:16703532b485c4edd3cbe47f62d44a51be4b7390b663e86eb5a7372ba9ecae52
+      - oci::quay.io/conforma/release-policy:latest@sha256:1b3d20d7d24dd42e615b41450291c5a475997fb2a21d1ae8c5b1c1c8034f4d32
     config:
       exclude:
         - hermetic_build_task.build_task_not_hermetic
@@ -353,7 +353,7 @@ sources:
       - github.com/release-engineering/rhtap-ec-policy//data
       - git::https://github.com/simonbaird/ec-data-demos//step_registry_prefixes
     policy:
-      - oci::quay.io/enterprise-contract/ec-release-policy:latest
+      - oci::quay.io/conforma/release-policy:latest
     config:
       exclude:
         - hermetic_build_task.build_task_not_hermetic
@@ -519,7 +519,7 @@ sources:
       - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
       - github.com/release-engineering/rhtap-ec-policy//data
     policy:
-      - oci::quay.io/enterprise-contract/ec-release-policy:latest
+      - oci::quay.io/conforma/release-policy:latest
       - git::https://github.com/joejstuart/ec-policy-demo//policy
     config:
       exclude:
@@ -528,7 +528,7 @@ sources:
         - tasks.missing_required_task:sast-snyk-check
         - test.test_result_failures:sanity-label-check
 ----
-TIP: The policy source `oci::quay.io/enterprise-contract/ec-release-policy:latest` will give you access to some useful helper methods
+TIP: The policy source `oci::quay.io/conforma/release-policy:latest` will give you access to some useful helper methods
 defined link:https://github.com/conforma/policy/tree/main/policy/lib[here]. For instance, `lib.result_helper(rego.metadata.chain(), [])`
 collects information from the `custom` annotation and uses it in the `ec` output. This can be helpful debugging violations.
 
