@@ -151,7 +151,8 @@ provided via `--policy` parameter.
 
 For example let's consider a YAML file containing a set of sign-offs for a
 release, and a policy mandating that a release must be signed-off by at least
-two persons from each relevant department.
+two persons from each relevant department. Create the following files in a
+working directory.
 
 .data.yaml - the data for validation
 [source,yaml]
@@ -168,17 +169,7 @@ engineering:  # engineering sign-offs
   - Zayn Simmons
 ----
 
-.policy.yaml - the policy configuration
-[source,yaml]
-----
-description: ACME & co sign-off policy
-sources:
-  - name: default-sign-off
-    policy:
-      - "git::https://github.com/acme/policy.git//policy?ref=prod"
-----
-
-.signoff.rego - the policy rules in the `github.com/acme/policy.git` repository at `policy/signoff.rego`
+.policy/signoff.rego - the policy rules
 [source,rego]
 ----
 #
@@ -205,6 +196,20 @@ deny contains result if {
 }
 ----
 
+.policy.yaml - the policy configuration
+[source,yaml]
+----
+description: ACME & co sign-off policy
+sources:
+  - name: default-sign-off
+    policy:
+      - policy
+----
+
+NOTE: The `policy` entry above is a local directory path pointing to the
+`policy/` directory containing `signoff.rego`. You could also use a remote git
+URL here, but a local path makes this example self-contained.
+
 With this, running the CLI shows that there is a policy violation, one sign-off
 from the engineering department is missing:
 
@@ -226,7 +231,7 @@ policy:
   sources:
   - name: default-sign-off
     policy:
-    - git::https://github.com/acme/policy.git//policy?ref=prod
+    - policy
 success: false
 Error: success criteria not met
 ----
