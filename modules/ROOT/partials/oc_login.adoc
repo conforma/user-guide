@@ -1,2 +1,2 @@
 Follow the procedure for accessing the Konflux cluster via the `oc` command line
-client link:https://konflux-ci.dev/docs/getting-started/cli/[as described here].
+client link:https://konflux-ci.dev/docs/getting-started/#getting-started-with-the-cli[as described here].

@@ -4,7 +4,7 @@
 == Creating an application
 
 If you don't already have an application defined in Konflux, follow the
-link:https://konflux-ci.dev/docs/how-tos/creating/[guide]. Once that's done you should have an application with at least one component.
+link:https://konflux-ci.dev/docs/building/creating/[guide]. Once that's done you should have an application with at least one component.
 To get the most out of Conforma, be sure to follow the steps in the guide so Konflux sends a pull request to your repository to define a custom build pipeline in your GitHub repository.
 
 == Creating an integration test
@@ -12,7 +12,7 @@ To get the most out of Conforma, be sure to follow the steps in the guide so Kon
 To run the Conforma pipeline automatically after each build, an integration test is
 used. One should be automatically created when a new application is created. The process of
 recreating it manually is
-link:https://konflux-ci.dev/docs/advanced-how-tos/managing-compliance-with-ec/[described here].
+link:https://konflux-ci.dev/docs/compliance/[described here].
 
 NOTE: You can view the definitions of the
 link:https://github.com/konflux-ci/build-definitions/blob/main/pipelines/enterprise-contract.yaml[Conforma pipeline],
