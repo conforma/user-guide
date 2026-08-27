@@ -123,9 +123,20 @@ spec:
       value: "false"
 ----
 
-Replace `<your-application-name>` with your application name, and
-`<managed-namespace>/<ecp-name>` with the ECP used by your release pipeline
-(for example, `rhtap-releng-tenant/registry-rhtap-contract`).
+Replace `<your-application-name>` with your application name, and set
+`POLICY_CONFIGURATION` to the ECP used by your release pipeline. The value
+can be specified in two ways:
+
+* **Cluster reference** -- `namespace/name` format pointing to an
+  `EnterpriseContractPolicy` CR in the cluster, for example
+  `rhtap-releng-tenant/registry-rhtap-contract`.
+* **Git URL** -- `git::github.com/org/repo//path/?ref=branchorsha` format
+  pointing to a `policy.yaml` (or `policy.json`) file in a git repository.
+  This lets teams manage their ECP in version control without creating
+  cluster resources.
+
+Teams can choose the approach that fits their workflow -- create ECP records
+in their own tenant namespace, or point to a policy file in git.
 
 Apply it to your namespace:
 
