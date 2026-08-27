@@ -68,18 +68,26 @@ The majority of policy rules, including signature verification, provenance
 checks, and trusted task validation, run at both `staging` and `release`.
 This means the default integration test already catches most violations.
 
-== Setting up a release-aligned integration test
+== Using POLICY_CONFIGURATION to match your release policy
 
-If you want the closest possible match to release-time checks during
-integration testing, you can create an additional `IntegrationTestScenario`
-that uses the same `EnterpriseContractPolicy` as your release pipeline.
+The key to catching release-time violations early is the
+`POLICY_CONFIGURATION` parameter. The default integration test uses a
+generic policy, but your release pipeline likely uses a specific
+`EnterpriseContractPolicy` (ECP) tailored to your product. By creating an
+additional `IntegrationTestScenario` that references the same ECP as your
+release pipeline, you can surface violations before you attempt a release.
+
+You can have multiple enterprise-contract integration tests, each with a
+different `POLICY_CONFIGURATION` value. For example, one for basic validation
+and another matching your release policy.
 
 === Step 1: Find your release policy configuration
 
 Your release policy is defined in the `ReleasePlanAdmission` in your managed
 namespace. Ask your release engineering or SRE team for the
 `EnterpriseContractPolicy` (ECP) name or configuration used in your release
-pipeline.
+pipeline. The value is typically in the format `namespace/name`, for example
+`rhtap-releng-tenant/registry-rhtap-contract`.
 
 === Step 2: Create a non-blocking integration test
 
@@ -93,7 +101,7 @@ Create a file called `release-check-its.yaml`:
 
 [,yaml]
 ----
-apiVersion: appstudio.redhat.com/v1alpha1
+apiVersion: appstudio.redhat.com/v1beta2
 kind: IntegrationTestScenario
 metadata:
   name: release-policy-check
@@ -110,14 +118,14 @@ spec:
         value: pipelines/enterprise-contract/0.1/enterprise-contract.yaml
   params:
     - name: POLICY_CONFIGURATION
-      value: <your-release-ecp>
+      value: <managed-namespace>/<ecp-name>
     - name: STRICT
       value: "false"
 ----
 
 Replace `<your-application-name>` with your application name, and
-`<your-release-ecp>` with the ECP used by your release pipeline (either a
-CR name like `enterprise-contract-service/default` or a git URL).
+`<managed-namespace>/<ecp-name>` with the ECP used by your release pipeline
+(for example, `rhtap-releng-tenant/registry-rhtap-contract`).
 
 Apply it to your namespace:
 
