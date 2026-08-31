@@ -1,4 +1,4 @@
-= Catching policy violations early with Integration Tests
+= Catching policy violations early with integration tests
 
 By default, the Conforma integration test in Konflux runs with
 `pipeline_intention` set to `staging`. This means some policy rules that are
@@ -91,14 +91,14 @@ include::partial$oc_login.adoc[]
 
 Create a file called `release-check-its.yaml`:
 
-[,yaml]
+[,yaml,subs="+quotes"]
 ----
 apiVersion: appstudio.redhat.com/v1beta2
 kind: IntegrationTestScenario
 metadata:
   name: release-policy-check
 spec:
-  application: <your-application-name>
+  application: __<your-application-name>__
   resolverRef:
     resolver: git
     params:
@@ -110,7 +110,7 @@ spec:
         value: pipelines/enterprise-contract/0.1/enterprise-contract.yaml
   params:
     - name: POLICY_CONFIGURATION
-      value: <managed-namespace>/<ecp-name>
+      value: __<managed-namespace>/<ecp-name>__
     - name: STRICT
       value: "false"
 ----
@@ -154,13 +154,12 @@ $ oc get pipelinerun --selector test.appstudio.openshift.io/scenario=release-pol
 
 == Considerations
 
-=== Schedule rules will likely fail
+=== Schedule rules are skipped
 
 The `schedule.weekday_restriction` and `schedule.date_restriction` rules
-check whether a release is happening on a permitted day or date. These rules
-will likely report violations during integration testing since they are
-evaluated against the current time rather than a planned release time. This
-is expected and can be safely ignored in the integration test results.
+only run when `pipeline_intention` is set to `release`. Since integration
+tests use `staging`, these rules are automatically skipped and will not
+appear in your results.
 
 === OLM rules may not pass until release-ready
 
@@ -205,6 +204,6 @@ Change the `STRICT` parameter:
 With `STRICT` set to `true`, any policy violation will cause the integration
 test to fail, preventing the snapshot from being released.
 
-NOTE: If you make this test blocking, be aware that `schedule` rule violations
-will block your builds even when the underlying code is fine. Consider
-excluding those rules in your integration test ECP if you enable blocking mode.
+NOTE: The `schedule` rules are skipped since the integration test uses
+`pipeline_intention: staging`. Only rules that run at `staging` can cause
+failures in blocking mode.
