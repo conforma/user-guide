@@ -8,7 +8,7 @@
 ** xref:reproducing-a-konflux-conforma-report.adoc[Reproducing a Konflux Conforma report locally]
 ** xref:custom-config.adoc[Using custom configuration]
 ** xref:custom-data.adoc[Using custom data]
-** xref:early-policy-violations.adoc[Catching policy violations early with Integration Tests]
+** xref:early-policy-violations.adoc[Catching policy violations early with integration tests]
 ** xref:hitchhikers-guide.adoc[Hitchhiker's Guide to Conforma]
 
 * xref:slsa.adoc[Conforma & SLSA]

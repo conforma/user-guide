@@ -16,48 +16,40 @@ should run. The default integration test uses `staging`, while the release
 pipeline uses `release`.
 
 .Rules by pipeline_intention
-[cols="3,1,1,1",options="header"]
+[cols="3,1,1",options="header"]
 |===
-| Rule | staging | release | production
+| Rule | staging | release
 
 | Most policy rules (signatures, provenance, trusted tasks, etc.)
-| Yes
 | Yes
 | Yes
 
 | `quay_expiration.expires_label`
 | Yes
 | Yes
-| Yes
 
 | `olm.unpinned_snapshot_references`
-| Yes
 | Yes
 | Yes
 
 | `olm.unpinned_related_images`
 | Yes
 | Yes
-| Yes
 
 | `olm.inaccessible_related_images`
-| Yes
 | Yes
 | Yes
 
 | `olm.unmapped_references`
 | Yes
 | Yes
-| Yes
 
 | `schedule.weekday_restriction`
 | No
 | Yes
-| Yes
 
 | `schedule.date_restriction`
 | No
-| Yes
 | Yes
 |===
 
@@ -162,7 +154,7 @@ $ oc get pipelinerun --selector test.appstudio.openshift.io/scenario=release-pol
 
 == Considerations
 
-=== Schedule rules will always fail
+=== Schedule rules will likely fail
 
 The `schedule.weekday_restriction` and `schedule.date_restriction` rules
 check whether a release is happening on a permitted day or date. These rules
