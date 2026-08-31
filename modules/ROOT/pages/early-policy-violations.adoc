@@ -132,6 +132,8 @@ in their own tenant namespace, or point to a policy file in git.
 
 Apply it to your namespace:
 
+Ensure you are in the correct namespace, then apply:
+
 [,shell]
 ----
 $ oc create -f release-check-its.yaml
@@ -141,8 +143,8 @@ $ oc create -f release-check-its.yaml
 
 After your next build completes, the integration test runs and reports any
 policy violations that would occur at release time. Because `STRICT` is set
-to `false`, the test always passes, but the results show which rules would
-fail.
+to `false`, policy violations do not cause the test to fail. The results
+still show which rules would have failed.
 
 You can view the results in the Konflux UI under your application's
 integration tests, or inspect the pipeline run directly:
@@ -167,6 +169,8 @@ For OLM (Operator Lifecycle Manager) operators, the following rules may
 report violations during integration testing that resolve themselves closer
 to release time:
 
+* `olm.unpinned_snapshot_references` -- snapshot references may not be pinned
+  until the release process pins them.
 * `olm.unpinned_related_images` -- related images may not be pinned until the
   release process pins them.
 * `olm.inaccessible_related_images` -- images may not be published to their
