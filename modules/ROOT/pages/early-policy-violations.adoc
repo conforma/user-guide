@@ -147,11 +147,13 @@ to `false`, policy violations do not cause the test to fail. The results
 still show which rules would have failed.
 
 You can view the results in the Konflux UI under your application's
-integration tests, or inspect the pipeline run directly:
+integration tests, or inspect the task run logs directly:
 
-[,shell,subs="+quotes"]
+[,shell]
 ----
-$ oc get pipelinerun --selector test.appstudio.openshift.io/scenario=release-policy-check --sort-by='.status.startTime' -o name | tail -1 | xargs oc logs -c step-report
+TR_NAME=$( oc get taskrun --selector tekton.dev/task=verify-enterprise-contract,test.appstudio.openshift.io/scenario=release-policy-check --sort-by='.status.startTime' -o name | tail -1 )
+POD_NAME=$( oc get $TR_NAME -o jsonpath='{.status.podName}' )
+oc logs -c step-report $POD_NAME
 ----
 
 == Considerations
