@@ -39,15 +39,6 @@ spec:
 The `params` key should be at the same indent level as `application` and
 `contexts` underneath the `spec` key.
 
-Before saving the YAML file, to workaround a problem with the API versions
-present in the cluster, you also need to also modify the API version to change
-`v1beta1` to `v1alpha1` in the first line of the YAML file.
-
-[,yaml]
-----
-apiVersion: appstudio.redhat.com/v1alpha1
-----
-
 Save the file to update the CR in the cluster.
 
 NOTE: The config file specified in the above example is
@@ -75,7 +66,7 @@ Create a yaml file called `policy.yaml` with the following content:
 
 [,yaml]
 ----
-apiVersion: appstudio.redhat.com/v1alpha1
+apiVersion: appstudio.redhat.com/v1beta2
 kind: EnterpriseContractPolicy
 metadata:
   name: ec-policy
@@ -125,13 +116,6 @@ spec:
     - name: POLICY_CONFIGURATION
       value: ec-policy
 …
-----
-
-Once again the API version workaround is needed, so modify the `apiVersion` value.
-
-[,yaml]
-----
-apiVersion: appstudio.redhat.com/v1alpha1
 ----
 
 Save the YAML file to update the IntegrationTestScenario CR with the new
