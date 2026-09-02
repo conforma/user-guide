@@ -1,0 +1,215 @@
+= Catching policy violations early with integration tests
+
+By default, the Conforma integration test in Konflux runs with
+`pipeline_intention` set to `staging`. This means some policy rules that are
+enforced at release time are skipped during integration testing. As a result,
+you may only discover certain violations when you attempt a release.
+
+This guide explains which rules are skipped, and how to configure an
+additional integration test that surfaces release-time violations earlier in
+your development workflow.
+
+== What is checked at each stage
+
+Policy rules use the `pipeline_intention` parameter to determine when they
+should run. The default integration test uses `staging`, while the release
+pipeline uses `release`.
+
+.Rules by pipeline_intention
+[cols="3,1,1",options="header"]
+|===
+| Rule | staging | release
+
+| Most policy rules (signatures, provenance, trusted tasks, etc.)
+| Yes
+| Yes
+
+| `quay_expiration.expires_label`
+| Yes
+| Yes
+
+| `olm.unpinned_snapshot_references`
+| Yes
+| Yes
+
+| `olm.unpinned_related_images`
+| Yes
+| Yes
+
+| `olm.inaccessible_related_images`
+| Yes
+| Yes
+
+| `olm.unmapped_references`
+| Yes
+| Yes
+
+| `schedule.weekday_restriction`
+| No
+| Yes
+
+| `schedule.date_restriction`
+| No
+| Yes
+|===
+
+The `schedule` rules are intentionally release-only -- they restrict _when_ a
+release can happen, which is not relevant during integration testing.
+
+The majority of policy rules, including signature verification, provenance
+checks, and trusted task validation, run at both `staging` and `release`.
+This means the default integration test already catches most violations.
+
+== Using POLICY_CONFIGURATION to match your release policy
+
+The key to catching release-time violations early is the
+`POLICY_CONFIGURATION` parameter. The default integration test uses a
+generic policy, but your release pipeline likely uses a specific
+`EnterpriseContractPolicy` (ECP) tailored to your product. By creating an
+additional `IntegrationTestScenario` that references the same ECP as your
+release pipeline, you can surface violations before you attempt a release.
+
+You can have multiple enterprise-contract integration tests, each with a
+different `POLICY_CONFIGURATION` value. For example, one for basic validation
+and another matching your release policy.
+
+=== Step 1: Find your release policy configuration
+
+Your release policy is defined in the `ReleasePlanAdmission` in your managed
+namespace. Ask your release engineering or SRE team for the
+`EnterpriseContractPolicy` (ECP) name or configuration used in your release
+pipeline. The value is typically in the format `namespace/name`, for example
+`rhtap-releng-tenant/registry-rhtap-contract`.
+
+=== Step 2: Create a non-blocking integration test
+
+Create a new `IntegrationTestScenario` that references the same policy
+configuration as your release pipeline. Setting `STRICT` to `false` makes
+this test informational -- it reports violations without blocking your builds.
+
+include::partial$oc_login.adoc[]
+
+Create a file called `release-check-its.yaml`:
+
+[,yaml,subs="+quotes"]
+----
+apiVersion: appstudio.redhat.com/v1beta2
+kind: IntegrationTestScenario
+metadata:
+  name: release-policy-check
+spec:
+  application: __<your-application-name>__
+  resolverRef:
+    resolver: git
+    params:
+      - name: url
+        value: https://github.com/conforma/tekton-catalog
+      - name: revision
+        value: main
+      - name: pathInRepo
+        value: pipelines/enterprise-contract/0.1/enterprise-contract.yaml
+  params:
+    - name: POLICY_CONFIGURATION
+      value: __<managed-namespace>/<ecp-name>__
+    - name: STRICT
+      value: "false"
+----
+
+Replace `<your-application-name>` with your application name, and set
+`POLICY_CONFIGURATION` to the ECP used by your release pipeline. The value
+can be specified in two ways:
+
+* **Cluster reference** -- `namespace/name` format pointing to an
+  `EnterpriseContractPolicy` CR in the cluster, for example
+  `rhtap-releng-tenant/registry-rhtap-contract`.
+* **Git URL** -- `git::github.com/org/repo//path/?ref=branchorsha` format
+  pointing to a `policy.yaml` (or `policy.json`) file in a git repository.
+  This lets teams manage their ECP in version control without creating
+  cluster resources.
+
+Teams can choose the approach that fits their workflow -- create ECP records
+in their own tenant namespace, or point to a policy file in git.
+
+Apply it to your namespace:
+
+Ensure you are in the correct namespace, then apply:
+
+[,shell]
+----
+$ oc create -f release-check-its.yaml
+----
+
+=== Step 3: Review results
+
+After your next build completes, the integration test runs and reports any
+policy violations that would occur at release time. Because `STRICT` is set
+to `false`, policy violations do not cause the test to fail. The results
+still show which rules would have failed.
+
+You can view the results in the Konflux UI under your application's
+integration tests, or inspect the task run logs directly:
+
+[,shell]
+----
+TR_NAME=$( oc get taskrun --selector tekton.dev/task=verify-enterprise-contract,test.appstudio.openshift.io/scenario=release-policy-check --sort-by='.status.startTime' -o name | tail -1 )
+POD_NAME=$( oc get $TR_NAME -o jsonpath='{.status.podName}' )
+oc logs -c step-report $POD_NAME
+----
+
+== Considerations
+
+=== Schedule rules are skipped
+
+The `schedule.weekday_restriction` and `schedule.date_restriction` rules
+only run when `pipeline_intention` is set to `release`. Since integration
+tests use `staging`, these rules are automatically skipped and will not
+appear in your results.
+
+=== OLM rules may not pass until release-ready
+
+For OLM (Operator Lifecycle Manager) operators, the following rules may
+report violations during integration testing that resolve themselves closer
+to release time:
+
+* `olm.unpinned_snapshot_references` -- snapshot references may not be pinned
+  until the release process pins them.
+* `olm.unpinned_related_images` -- related images may not be pinned until the
+  release process pins them.
+* `olm.inaccessible_related_images` -- images may not be published to their
+  final registry location until release.
+* `olm.unmapped_references` -- similar to the above, references may not be
+  fully mapped until release.
+
+These are informational during integration testing. If they consistently fail,
+it may indicate an issue worth investigating.
+
+=== Keeping policies in sync
+
+If the release ECP is updated, your integration test will automatically pick
+up the changes (assuming you reference the same ECP). This ensures your
+early checks stay aligned with what the release pipeline enforces.
+
+== Making the test blocking
+
+Once you are confident that your integration test results are clean, you can
+make the test blocking by changing `STRICT` to `true`:
+
+[,shell,subs="+quotes"]
+----
+$ oc edit integrationtestscenario release-policy-check
+----
+
+Change the `STRICT` parameter:
+
+[,yaml]
+----
+    - name: STRICT
+      value: "true"
+----
+
+With `STRICT` set to `true`, any policy violation will cause the integration
+test to fail, preventing the snapshot from being released.
+
+NOTE: The `schedule` rules are skipped since the integration test uses
+`pipeline_intention: staging`. Only rules that run at `staging` can cause
+failures in blocking mode.
