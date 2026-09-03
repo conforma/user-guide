@@ -81,13 +81,13 @@ namespace. To find it, look up your `ReleasePlan` and find the associated
 
 [,shell,subs="+quotes"]
 ----
-$ oc get releaseplan __<releaseplan-name>__ -o yaml | yq .metadata.labels | grep release
+$ oc get releaseplan __<releaseplan-name>__ -o yaml | yq .metadata.labels | grep releasePlanAdmission
 ----
 
 The output includes a label like
-`release.appstudio.openshift.io/releasePlanAdmission: <ecp-name>`. Prepend the
+`release.appstudio.openshift.io/releasePlanAdmission: <rpa-name>`. Prepend the
 managed namespace to get the full reference, for example
-`rhtap-releng-tenant/<ecp-name>`.
+`rhtap-releng-tenant/<rpa-name>`.
 
 You can also find this in the `konflux-release-data` repository by browsing
 your tenant's `ReleasePlan` YAML files under
