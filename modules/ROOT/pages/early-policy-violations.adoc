@@ -76,18 +76,19 @@ and another matching your release policy.
 === Step 1: Find your release policy configuration
 
 Your release policy is defined in the `ReleasePlanAdmission` (RPA) in your
-managed namespace. First, find the RPA name from your `ReleasePlan`:
+managed namespace. First, find the RPA name from your `ReleasePlan` (run this
+in your tenant namespace):
 
 [,shell,subs="+quotes"]
 ----
-$ oc get releaseplan __<releaseplan-name>__ -o yaml | yq .metadata.labels | grep releasePlanAdmission
+$ oc get releaseplan __<releaseplan-name>__ -n __<tenant-namespace>__ -o yaml | yq -r '.metadata.labels["release.appstudio.openshift.io/releasePlanAdmission"]'
 ----
 
 Then extract the `EnterpriseContractPolicy` (ECP) reference from the RPA:
 
 [,shell,subs="+quotes"]
 ----
-$ oc get releaseplanadmission __<rpa-name>__ -n __<managed-namespace>__ -o yaml | yq .spec.policy
+$ oc get releaseplanadmission __<rpa-name>__ -n __<managed-namespace>__ -o yaml | yq -r .spec.policy
 ----
 
 The output is the ECP reference to use in `POLICY_CONFIGURATION`, typically in
