@@ -8,6 +8,18 @@ This is the Conforma User Guide repository, which contains documentation for Con
 
 ## Common Commands
 
+### Documentation Validation
+```bash
+make validate-docs
+```
+Lightweight validation that works without external repositories or network access. Checks:
+- AsciiDoc syntax errors (requires `asciidoctor`; skips gracefully if not installed)
+- Broken `xref:` references to non-existent pages within this component
+- Broken `include::` references to non-existent partials
+- Navigation references to non-existent pages
+
+Run this after editing any `.adoc` file to catch errors before pushing.
+
 ### Documentation Preview
 ```bash
 make ec-docs-preview

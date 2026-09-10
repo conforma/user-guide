@@ -17,6 +17,9 @@ HACBS_DOCS_REPO=git@github.com:conforma/conforma.github.io.git
 $(HACBS_DOCS_DIR):
 	mkdir $(HACBS_DOCS_DIR) && cd $(HACBS_DOCS_DIR) && git clone $(HACBS_DOCS_REPO) .
 
+validate-docs: ## Validate AsciiDoc syntax, xrefs, and includes (no external deps required)
+	@bash bin/validate-docs.sh
+
 CURRENT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 ec-docs-preview: $(HACBS_DOCS_DIR) ## Build a preview of the documentation
 	cd $(HACBS_DOCS_DIR) && \
