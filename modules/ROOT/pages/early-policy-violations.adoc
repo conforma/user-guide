@@ -75,11 +75,30 @@ and another matching your release policy.
 
 === Step 1: Find your release policy configuration
 
-Your release policy is defined in the `ReleasePlanAdmission` in your managed
-namespace. Ask your release engineering or SRE team for the
-`EnterpriseContractPolicy` (ECP) name or configuration used in your release
-pipeline. The value is typically in the format `namespace/name`, for example
-`rhtap-releng-tenant/registry-rhtap-contract`.
+Your release policy is defined in the `ReleasePlanAdmission` (RPA) in your
+managed namespace. First, find the RPA name from your `ReleasePlan` (run this
+in your tenant namespace):
+
+[,shell,subs="+quotes"]
+----
+$ oc get releaseplan __<releaseplan-name>__ -n __<tenant-namespace>__ -o yaml | yq -r '.metadata.labels["release.appstudio.openshift.io/releasePlanAdmission"]'
+----
+
+Then extract the `EnterpriseContractPolicy` (ECP) reference from the RPA:
+
+[,shell,subs="+quotes"]
+----
+$ oc get releaseplanadmission __<rpa-name>__ -n __<managed-namespace>__ -o yaml | yq -r .spec.policy
+----
+
+The output is the ECP reference to use in `POLICY_CONFIGURATION`, typically in
+the format `namespace/name` (for example `rhtap-releng-tenant/registry-rhtap-contract`).
+
+You can also find this in the `konflux-release-data` repository by browsing
+your tenant's `ReleasePlanAdmission` YAML files under
+`tenants-config/auto-generated/cluster/<cluster>/tenants/<tenant>/`.
+
+Ask your release engineering or SRE team if you have trouble finding it.
 
 === Step 2: Create a non-blocking integration test
 
