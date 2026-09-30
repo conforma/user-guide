@@ -10,7 +10,7 @@ validate those operations.
 Before starting, the following tooling is required:
 
 * https://github.com/sigstore/cosign#installation[cosign]
-* https://enterprisecontract.dev/docs/user-guide/cli.html[ec cli]
+* https://conforma.dev/docs/user-guide/cli.html[ec cli]
 * https://github.com/containers/skopeo[skopeo] or
   https://github.com/google/go-containerregistry/tree/main/cmd/crane[crane]
 * https://docs.docker.com/engine/reference/run/[docker] or https://podman.io/[podman] (optional)
@@ -216,11 +216,11 @@ the expected value.
 The `METADATA` comment block is rego's way to specify
 https://www.openpolicyagent.org/docs/latest/policy-language/#metadata[annotations] for rules. Conforma
 leverages this in order to provide additional information in its report, see
-https://enterprisecontract.dev/docs/policy/authoring.html#_rule_annotations[here].
+https://conforma.dev/docs/policy/authoring.html#_rule_annotations[here].
 
 `input` is a rego object that holds all the information about the image, its signature, and its
 attestations. Its contents are defined
-https://enterprisecontract.dev/docs/cli/policy_input.html[here]. It is also possible to save
+https://conforma.dev/docs/cli/policy_input.html[here]. It is also possible to save
 this object to a JSON file which is useful when writing new policy rules. To do so, use the
 `policy-input` output, e.g. `ec validate image ... --output policy-input`.
 
@@ -239,7 +239,7 @@ sources:
 This policy configuration references the rules by file name, which have to be absolute paths. This
 is useful for testing and development of rules. Referencing rules in a git repository or in an OCI
 registry are better suited for most other use cases. The
-https://enterprisecontract.dev/docs/cli/configuration.html[docs] on policy configuration
+https://conforma.dev/docs/cli/configuration.html[docs] on policy configuration
 explain this concept further.
 
 Finally, let's use this policy in our validation and also use the previously mentioned flags to
