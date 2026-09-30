@@ -57,6 +57,15 @@ The documentation is structured as follows:
 - `modules/ROOT/partials/contents.adoc` - Contains the main content navigation menu
 - Individual `.adoc` files in `pages/` contain the actual documentation content
 
+## AsciiDoc Content Conventions
+
+- **Replaceable values:** In shell or YAML source blocks, set `subs="+quotes"` and write values the reader must replace as `__<name>__`. For example, `[,shell,subs="+quotes"]` with `oc get integrationtestscenario __<testname>__`, or `[,yaml,subs="+quotes"]` with `value: __<managed-namespace>/<ecp-name>__`. The underscores render placeholders in italics. Avoid bare `<name>` placeholders in new source blocks.
+- **Page titles:** Use sentence case for new page titles, for example `= Catching policy violations early with integration tests`. For numbered procedures, keep headings consistent, as in `=== Step 1: Find your release policy configuration` and `=== Step 2: Create a non-blocking integration test`. Some older pages use title case.
+- **Navigation entries:** Match the page title's sentence-case capitalization when adding an entry. For example, `xref:early-policy-violations.adoc[Catching policy violations early with integration tests]` matches that page's title. A shorter label may use fewer words.
+- **Admonitions:** Use the forms already present in this guide: `NOTE:`, `TIP:`, and `WARNING:`. For example, `NOTE: Conforma was previously known as "Enterprise Contract".` Do not introduce `IMPORTANT:` or `CAUTION:`.
+- **Cross-references:** Use Antora `xref:page.adoc[label]` within this component, for example `xref:cli.adoc[command line use]`. For another component, include its component and module: `xref:policy:ROOT:release_policy.adoc[policies]`.
+- **Code block language:** Put the Antora shorthand `[,language]` immediately before the `----` block delimiter, for example `[,yaml]` or `[,shell]`. Add `subs="+quotes"` when the block contains replaceable values.
+
 ## Development Notes
 
 This is a documentation-only repository using Antora static site generator. Changes to `.adoc` files will be reflected in the published documentation after the preview build process.
