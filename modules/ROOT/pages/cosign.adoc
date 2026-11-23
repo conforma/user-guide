@@ -6,7 +6,7 @@ signatures and attestations for builds created by
 link:https://github.com/konflux-ci[Konflux CI].
 
 For detailed information on Cosign refer to the
-link:https://docs.sigstore.dev/cosign/overview/[official documentation].
+link:https://docs.sigstore.dev/cosign/signing/overview/[official documentation].
 
 This document assumes cosign version 2.
 

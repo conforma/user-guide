@@ -64,7 +64,7 @@ is the default used by Tekton Chains, though this may change in the future.)
 a| https://slsa.dev/spec/v1.0/threats#f-upload-modified-package[Threat (G) - Upload modified package],
 https://slsa.dev/spec/v1.0/threats#h-use-compromised-package[Threat (H) - Use compromised package] (v1.0)
 a| xref:policy:ROOT:release_policy.adoc#builtin_image__signature_check[Image signature check passed]
-a| Conforma uses a public key to validate the signature of the image using https://docs.sigstore.dev/cosign/overview/[Cosign]. If the image
+a| Conforma uses a public key to validate the signature of the image using https://docs.sigstore.dev/cosign/signing/overview/[Cosign]. If the image
 signature can't be verified for any reason, a failure will be reported. There are other ways to verify image signatures, e.g. by using `cosign` directly,
 but Conforma will happily do it for you.
 
