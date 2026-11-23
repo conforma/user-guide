@@ -153,4 +153,4 @@ flexible enough to become a part of other build systems where supply chain secur
 is a priority.
 
 If you have questions, or want to provide feedback, please reach out to the
-Conforma team via https://github.com/enterprise-contract[GitHub].
+Conforma team via https://github.com/conforma[GitHub].
